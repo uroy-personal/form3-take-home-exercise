@@ -7,6 +7,13 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+
+	"github.com/op/go-logging"
+)
+
+var log = logging.MustGetLogger("Form3API-Testing")
+var format = logging.MustStringFormatter(
+	`%{color}%{time:15:04:05.000} %{shortfunc} ▶ %{level:.4s} %{id:03x}%{color:reset} %{message}`,
 )
 
 func (c *Client) FetchAccount(ctx context.Context, id string) (*AccountMessage, error) {
@@ -23,7 +30,7 @@ func (c *Client) FetchAccount(ctx context.Context, id string) (*AccountMessage, 
 	if err := c.sendRequest(req, &res); err != nil {
 		return nil, err
 	}
-	fmt.Printf("%+v\n", res)
+	log.Info("%+v\n", res)
 	return &res, nil
 }
 
@@ -42,7 +49,7 @@ func (c *Client) CreateAccount(ctx context.Context, accountMesage *AccountMessag
 	if err := c.sendRequest(req, &res); err != nil {
 		return nil, err
 	}
-	fmt.Printf("%+v\n", res)
+	log.Info("%+v\n", res)
 	return &res, nil
 }
 
@@ -60,7 +67,7 @@ func (c *Client) DeleteAccount(ctx context.Context, id string) (*string, error) 
 	if err := c.sendRequest(req, &res); err != nil {
 		return nil, err
 	}
-	fmt.Printf("Delete-Response %+v\n", res)
+	log.Info("Delete-Response %+v\n", res)
 	return &res, nil
 }
 func (c *Client) sendRequest(req *http.Request, v interface{}) error {

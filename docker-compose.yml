@@ -24,12 +24,6 @@ services:
       - DATABASE-PASSWORD=123
     ports:
       - 8080:8080
-    healthcheck:
-      test: curl --fail http://localhost:8080/v1/status || exit 1
-      interval: 10s
-      retries: 5
-      start_period: 5s
-      timeout: 10s
 #    networks:
 #      - form3-test 
   postgresql:
@@ -55,7 +49,7 @@ services:
     depends_on:
       - accountapi
     environment:
-      - ACCOUNT_BASE_URL=http://accountapi:8080
+     - ACCOUNT_BASE_URL=http://accountapi:8080
 #    networks:
 #      - form3-test  
   vault:

@@ -2,11 +2,8 @@ package form3
 
 import (
 	"context"
-	"fmt"
 	"os"
 	"testing"
-
-	"log"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -16,15 +13,17 @@ var uniqueOrganizationId string
 
 func init() {
 	// accountBaseURL := "http://accountapi:8080"
-	fmt.Printf("AccountBaseURL: %+v\n", os.Getenv("ACCOUNT_BASE_URL"))
+	log.Info("AccountBaseURL: %+v\n", os.Getenv("ACCOUNT_BASE_URL"))
 	c := NewClient(os.Getenv("ACCOUNT_BASE_URL"))
+	// c := NewClient("http://accountapi:8080")
 	var err error
 	uniqueAccountId, err = c.GenerateUniqueID()
 	uniqueOrganizationId, err = c.GenerateUniqueID()
-	fmt.Printf("baseURL: %+v\n", c.BaseURL)
-	fmt.Printf("uniqueAccountId: %+v\n", uniqueAccountId)
-	fmt.Printf("uniqueOrganizationId: %+v\n", uniqueOrganizationId)
-	fmt.Printf("error: %+v\n", err)
+	log.Info("baseURL: %+v\n", c.BaseURL)
+	log.Info("uniqueAccountId: %+v\n", uniqueAccountId)
+	log.Info("uniqueOrganizationId: %+v\n", uniqueOrganizationId)
+	log.Info("error: %+v\n", err)
+
 }
 func TestAll(t *testing.T) {
 	t.Run("A=Create", func(t *testing.T) {
@@ -35,12 +34,12 @@ func TestAll(t *testing.T) {
 		bankIdCode := "GBDSC"
 		bic := "NWBKGB22"
 		name := []string{"UmeshRoy"}
-		fmt.Printf("AccountBaseURL2: %+v\n", os.Getenv("ACCOUNT_BASE_URL"))
+		log.Info("AccountBaseURL2: %+v\n", os.Getenv("ACCOUNT_BASE_URL"))
 		c := NewClient(os.Getenv("ACCOUNT_BASE_URL"))
-		//fmt.Printf("uniqueAccountId: %+v\n", uniqueAccountId)
-		//fmt.Printf("uniqueOrganizationId: %+v\n", uniqueOrganizationId)
+		//log.Info("uniqueAccountId: %+v\n", uniqueAccountId)
+		//log.Info("uniqueOrganizationId: %+v\n", uniqueOrganizationId)
 		accountMessage, err := c.PopulateAccountMesage(bankId, bankIdCode, baseCurrency, bic, country, name, uniqueOrganizationId, uniqueAccountId)
-		//fmt.Printf("accountMessage: %+v\n", accountMessage)
+		//log.Info("accountMessage: %+v\n", accountMessage)
 		ctx := context.Background()
 
 		// res := AccountMessage{}
@@ -74,8 +73,8 @@ func TestAll(t *testing.T) {
 
 		res, err := c.DeleteAccount(ctx, uniqueAccountId)
 
-		fmt.Printf("Delete-Response %+v\n", res)
-		fmt.Printf("Delete-error %+v\n", err)
+		log.Info("Delete-Response %+v\n", res)
+		log.Info("Delete-error %+v\n", err)
 
 		assert.Nil(t, res, "expecting nil error")
 
