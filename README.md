@@ -1,4 +1,4 @@
-# A reusable REST client library
+# A Reusable REST client library
 
 Features
 - Written in Go.
